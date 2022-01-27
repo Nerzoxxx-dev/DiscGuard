@@ -7,10 +7,12 @@ const globPromise = promisify(glob)
 export class SlashCommandsHandler {
 
   public static arrayOfSlashCommands = [];
+  public static arrayOfFile= [];
 
   public static async handleSlashCommands(slashCommandsCollection: Collection<string, any>){
     var slashCommandsDir = process.env.SLASH_COMMANDS_DIR;
     const slashCommands = await globPromise(`${process.cwd()}/${slashCommandsDir}/*/*.ts`)
+    this.arrayOfFile = slashCommands;
 
     slashCommands.map((value) => {
       const file = require(value);

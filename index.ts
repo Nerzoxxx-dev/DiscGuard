@@ -2,7 +2,7 @@ import { Client, Collection, Intents } from "discord.js";
 import {Handler} from "./Handlers/Handler";
 
 require("dotenv").config()
-var client: Client = new Client({intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_PRESENCES, Intents.FLAGS.GUILD_MESSAGES]})
+var client = new Client({intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_PRESENCES, Intents.FLAGS.GUILD_MESSAGES]})
 var prefix = process.env.PREFIX as string
 var commandsNoSlash: Collection<string, any> = new Collection();
 var SlashCommandsCollection: Collection<string, any> = new Collection();
