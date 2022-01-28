@@ -1,10 +1,6 @@
-import { promisify } from "util"
 import { Utils } from "../../Utils/Utils"
-import {glob} from "glob";
-import { readdirSync } from "fs";
 import { SlashCommandsHandler } from "../../Handlers/SlashCommandsHandler";
-import { Client, MessageEmbed, TextChannel } from "discord.js";
-const globPromise = promisify(glob)
+import {  MessageEmbed } from "discord.js";
 
 function resolveCategory(baseStr){
   switch(baseStr){

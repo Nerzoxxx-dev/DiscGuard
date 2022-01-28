@@ -1,4 +1,5 @@
 import { Client, Collection, Intents } from "discord.js";
+import { Database } from "./Database";
 import {Handler} from "./Handlers/Handler";
 
 require("dotenv").config()
@@ -20,6 +21,8 @@ client.on('messageCreate', (message) => {
   
   commandsNoSlash.get(command).run(client, message, args)
 })
+
+Database.init()
 
 
 client.login(process.env.TOKEN)
