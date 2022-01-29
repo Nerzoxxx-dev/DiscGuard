@@ -3,7 +3,7 @@ import { Database } from "./Database";
 import {Handler} from "./Handlers/Handler";
 
 require("dotenv").config()
-var client = new Client({intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_PRESENCES, Intents.FLAGS.GUILD_MESSAGES]})
+var client = new Client({intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_PRESENCES, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MEMBERS]})
 var prefix = process.env.PREFIX as string
 var commandsNoSlash: Collection<string, any> = new Collection();
 var SlashCommandsCollection: Collection<string, any> = new Collection();
@@ -21,6 +21,7 @@ client.on('messageCreate', (message) => {
   
   commandsNoSlash.get(command).run(client, message, args)
 })
+
 
 Database.init()
 
