@@ -14,7 +14,8 @@ export class Player {
         .setTitle('🎵 Musique')
         .setDescription('Un nouveau titre vient d\'être joué.')
         .addField('> Titre de la musique', `${track.title}`)
-        .setFooter(Embed.resolveFooter(client))
+        .setFooter(Embed.resolveFooter(client.user))
+        .setTimestamp()
       ]})
     })
   }

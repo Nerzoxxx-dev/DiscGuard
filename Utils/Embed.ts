@@ -1,6 +1,5 @@
 export class Embed {
-  public static resolveFooter(client){
-    var date = new Date().toLocaleDateString('fr-FR')
-    return { text: 'DiscGuard | ' + date, iconURL: client.user.displayAvatarURL() };
+  public static resolveFooter(user){
+    return { text: `${user.username}#${user.discriminator}`, iconURL: user.displayAvatarURL() };
   }
 }

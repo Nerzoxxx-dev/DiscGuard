@@ -13,6 +13,8 @@ function resolveCategory(baseStr){
     case 'music':
       return '> 🎵 Musique';
       break;
+    case 'infos':
+      return '> 📰 Informations';
   }
 }
 
@@ -21,6 +23,7 @@ module.exports.run = async function(client, interaction){
   var commandOpt = interaction.options.getString('command') as string
   var utils = [];
   var music = [];
+  var infos = [];
   var filesH = [];
   for(var f of SlashCommandsHandler.arrayOfFile){filesH.push(f)}
   for(var f of CommandHandler.arrayOfFile){filesH.push(f)}
@@ -53,6 +56,19 @@ module.exports.run = async function(client, interaction){
             break;
         }
         break;
+        case 'infos':
+          switch(file.help.type){
+            case 'slash':
+              infos.push('``' + file.help.name + ': Commande slash``')
+              break;
+            case 'bot':
+              infos.push('``' + file.help.name + ': Commande du robot``')
+              break;
+            default:
+              infos.push('``' + file.help.name + ': Commande slash``')
+              break;
+          }
+          break;
     }
   }
   var date = new Date().toLocaleDateString('fr-FR');
@@ -62,7 +78,9 @@ module.exports.run = async function(client, interaction){
     .setDescription('Affiche toutes les commandes du bot')
     .addField(resolveCategory('utils'), utils.length > 0 ? utils.join(' ') : '``Rien à afficher``')
     .addField(resolveCategory('music'), music.length > 0 ? music.join(' ') : '``Rien à afficher``')
-    .setFooter(Embed.resolveFooter(client))
+    .addField(resolveCategory('infos'), infos.length > 0 ? infos.join(' ') : '``Rien à afficher``')
+    .setFooter(Embed.resolveFooter(interaction.user))
+    .setTimestamp()
 
     interaction.reply(":white_check_mark: Envoyé!")
     return channel.send({embeds: [embed]})
