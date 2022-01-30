@@ -30,19 +30,23 @@ module.exports = {
     var member = interaction.guild.members.cache.find(m => m.id === usr.id)
     var datas: any = {}
     var status = ""
-    switch(member.presence.status){
-      case 'online':
-        status = "🟢 En ligne"
-        break;
-      case 'dnd':
-        status = "🔴 Ne pas déranger"
-        break;
-      case 'idle':
-        status = "🟠 AFK"
-        break;
-      case 'offline':
-        status = "⚪ Hors-Ligne"
-        break;
+    if(member.presence !== null){
+      switch(member.presence.status){
+        case 'online':
+          status = "🟢 En ligne"
+          break;
+        case 'dnd':
+          status = "🔴 Ne pas déranger"
+          break;
+        case 'idle':
+          status = "🟠 AFK"
+          break;
+        case 'offline':
+          status = "⚪ Hors-Ligne"
+          break;
+      }
+    }else {
+      status = "⚪ Hors-Ligne"
     }
     datas.status = status;
     const roles = member.roles.cache.sort((a, b) => b.position - a.position).filter(role => role.id !== interaction.guild.roles.everyone.id).map(role => role.toString());
@@ -51,8 +55,9 @@ module.exports = {
     if(rolesStr.length > 300) rolesStr = rolesStr.substr(0, 310) + " et plus...";
     datas.rolesStr = rolesStr;
 
-    var activity = member.presence.activities[0];
+    var activity = member.presence !== null ? member.presence.activities[0] : undefined;
     var activityToDisplay = "";
+
     if(activity){
       if(activity.name !== "Custom Status") {
         switch (activity.type) {
