@@ -1,9 +1,14 @@
+import { Player } from "./Player";
 import { Client, Collection, Intents } from "discord.js";
 import { Database } from "./Database";
 import {Handler} from "./Handlers/Handler";
 
 require("dotenv").config()
-var client = new Client({intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_PRESENCES, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MEMBERS]})
+var client = new Client({intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_PRESENCES, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MEMBERS, Intents.FLAGS.GUILD_VOICE_STATES]})
+
+Player.init(client)
+Database.init()
+
 var prefix = process.env.PREFIX as string
 var commandsNoSlash: Collection<string, any> = new Collection();
 var SlashCommandsCollection: Collection<string, any> = new Collection();
@@ -21,10 +26,6 @@ client.on('messageCreate', (message) => {
   
   commandsNoSlash.get(command).run(client, message, args)
 })
-
-
-Database.init()
-
 
 client.login(process.env.TOKEN)
 

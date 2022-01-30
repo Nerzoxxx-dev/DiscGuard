@@ -20,6 +20,7 @@ export class SlashCommandsHandler {
 
       slashCommandsCollection.set(file.name, file)
       SlashCommandsHandler.arrayOfSlashCommands.push(file)
+      console.log(file.help.name + " ✅ SLASH")
     });
   }
 }

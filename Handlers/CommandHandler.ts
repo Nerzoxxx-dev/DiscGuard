@@ -1,26 +1,26 @@
 import { Collection } from "discord.js";
-import { fstat, readdirSync, stat } from "fs";
+import {glob} from "glob";
+import {promisify} from "util";
+
+const globPromise = promisify(glob)
 
 export class CommandHandler  {
+  public static arrayOfFile: any[] = [];
   public static handleCommands(commandsNoSlash: Collection<string, any>){
-    var commandir = process.env.COMMANDS_DIR as string;
-    var commands = CommandHandler.readDir(commandir, commandsNoSlash);
+    this.readDir(commandsNoSlash)
   }
 
-  private static readDir(commandir: string, commandsNoSlash: Collection<string, any>){
-    var commands = readdirSync("./" + commandir)
-    commands.forEach(cmd => {
-       stat(commandir + cmd, (err, stats) => {
-          if(err) console.log(err);
-          else {
-            if(stats.isDirectory()){
-              this.readDir(commandir + cmd + '/', commandsNoSlash);
-            }else {
-              var commandReq = require("../" + commandir + cmd)
-              commandsNoSlash.set(commandReq.help.name, commandReq);
-            }
-          }
-       })
+  private static async readDir(commandsNoSlash: Collection<string, any>){
+    var commandsDir = process.env.COMMANDS_DIR;
+    const slashCommands = await globPromise(`${process.cwd()}/${commandsDir}/*/*.ts`)
+    this.arrayOfFile = slashCommands;
+
+    slashCommands.map((value) => {
+      const file = require(value);
+      if(!file?.help.name) return;
+
+      commandsNoSlash.set(file.help.name, file)
+      console.log(file.help.name + "  COMMAND")
     });
   }
 }

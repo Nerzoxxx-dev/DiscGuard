@@ -27,4 +27,17 @@ export class GuildSettings {
     var r = db.prepare('SELECT * FROM settings WHERE guildId=?').get(this.options.guildId)
     return r.verification_channel_id;
   }
+  public resolvePrefix(): string{
+    return 'd!';
+  }
+  public djRoleEnabled(): boolean {
+    var db = Database.getDB()
+    var r = db.prepare('SELECT * FROM settings WHERE guildId=?').get(this.options.guildId)
+    return r.djRoleEnabled;
+  }
+  public getDjRoleId(): Snowflake|string|undefined {
+    var db = Database.getDB()
+    var r = db.prepare('SELECT * FROM settings WHERE guildId=?').get(this.options.guildId)
+    return r.djRoleId;
+  }
 }
