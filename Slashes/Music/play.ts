@@ -45,7 +45,7 @@ module.exports = {
 
     res.playlist ? queue.addTracks(res.tracks) : queue.addTrack(res.tracks[0])
 
-    await interaction.followUp({content: `🎵  Chargement | ${res.playlist ? 'Playlist': 'Titre'} ajouté à la queue.!`})
+    await interaction.followUp({content: `🎵  | ${res.playlist ? 'Playlist': 'Titre'} ajouté à la queue !`})
 
     if(!queue.playing) queue.play()
   }

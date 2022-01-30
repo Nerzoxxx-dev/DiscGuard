@@ -5,14 +5,14 @@ import { Permissions } from "discord.js"
 
 module.exports = {
   help: {
-    name: 'skip',
-    description: "Passe à la prochaine musique dans la queue.",
+    name: 'stop',
+    description: "Arrête la musique et la queue en cours.",
     type: "slash",
     category: "music",
-    usage: "/skip",
+    usage: "/stop",
     data: {
-      name: "skip",
-      description: "Passe à la prochaine musique dans la queue."
+      name: "stop",
+      description: "Arrête la musique et la queue en cours."
     }
   },
   run: async(client, interaction) => {
@@ -21,13 +21,14 @@ module.exports = {
     var gSettings = new GuildSettings({guildId: interaction.guild.id})
 
     if(gSettings.djRoleEnabled()){
-      if(!interaction.member.roles.cache.some(r => r.id === gSettings.getDjRoleId()) && !interaction.member.permissions.has(Permissions.FLAGS.ADMINISTRATOR)) return interaction.reply(':x: Vous n\'avez pas les permissions requises pour utiliser cette commande.')
+      if(!interaction.member.roles.cache.has(gSettings.getDjRoleId()) && !interaction.member.permissions.has(Permissions.FLAGS.ADMINISTRATOR)) return interaction.reply(':x: Vous n\'avez pas les permissions requises pour utiliser cette commande.')
     }
 
     if(!queue || !queue.playing) return interaction.reply(':x: Aucun titre n\'est en cours de lecture, veuillez utiliser la commande /play avant d\'utiliser la commande /skip.')
 
     await interaction.deferReply()
-    var s = queue.skip()
-    return await interaction.followUp({content: s ? '🎵 |  La musique actuelle ``'  + queue.current.title + '`` a bien été skippée.' : ':x: Une erreur s\'est produite, veuillez réessayer...'})
+    queue.destroy(true)
+
+    return await interaction.followUp({content: '🎵 | La queue a bien été stoppée.'})
   }
 }
