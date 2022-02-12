@@ -5,7 +5,8 @@
   "main": "index.js",
   "dependencies": {
     "@discordjs/builders": "^0.12.0",
-    "@discordjs/opus": "^0.5.3",
+    "@discordjs/node-pre-gyp": "^0.4.2",
+    "@discordjs/opus": "^0.7.0",
     "@discordjs/rest": "^0.3.0",
     "avconv": "^3.1.0",
     "axios": "^0.25.0",
@@ -23,7 +24,8 @@
     "mysql": "^2.18.1",
     "prettier": "^2.5.1",
     "ts-node": "^10.4.0",
-    "util": "^0.12.4"
+    "util": "^0.12.4",
+    "ytdl-core": "^4.10.1"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -31,5 +33,10 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "binary": {
+    "module_name": "DiscGuard",
+    "module_path": "./lib/build",
+    "host": ""
+  }
 }

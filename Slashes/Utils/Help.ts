@@ -15,6 +15,10 @@ function resolveCategory(baseStr){
       break;
     case 'infos':
       return '> 📰 Informations';
+      break;
+    case 'moderation':
+      return '> 🛡️ Modération';
+      break;
   }
 }
 
@@ -25,6 +29,7 @@ module.exports.run = async function(client, interaction){
   var music = [];
   var infos = [];
   var filesH = [];
+  var moderation = [];
   for(var f of SlashCommandsHandler.arrayOfFile){filesH.push(f)}
   for(var f of CommandHandler.arrayOfFile){filesH.push(f)}
   for(var f of filesH){
@@ -69,6 +74,19 @@ module.exports.run = async function(client, interaction){
               break;
           }
           break;
+          case 'moderation':
+          switch(file.help.type){
+            case 'slash':
+              moderation.push('``' + file.help.name + ': Commande slash``')
+              break;
+            case 'bot':
+              moderation.push('``' + file.help.name + ': Commande du robot``')
+              break;
+            default:
+              moderation.push('``' + file.help.name + ': Commande slash``')
+              break;
+          }
+          break;
     }
   }
   var date = new Date().toLocaleDateString('fr-FR');
@@ -79,6 +97,7 @@ module.exports.run = async function(client, interaction){
     .addField(resolveCategory('utils'), utils.length > 0 ? utils.join(' ') : '``Rien à afficher``')
     .addField(resolveCategory('music'), music.length > 0 ? music.join(' ') : '``Rien à afficher``')
     .addField(resolveCategory('infos'), infos.length > 0 ? infos.join(' ') : '``Rien à afficher``')
+    .addField(resolveCategory('moderation'), moderation.length > 0 ? moderation.join(' ') : '``Rien à afficher``')
     .setFooter(Embed.resolveFooter(interaction.user))
     .setTimestamp()
 
@@ -104,7 +123,7 @@ module.exports.run = async function(client, interaction){
     .setDescription(file.help.description)
     .addField('Catégorie', resolveCategory(file.help.category))
     .addField('Comment l\'utiliser ?', `\`\`${file.help.usage.replace('{{prefix}}', new GuildSettings({guildId: interaction.guild.id}).resolvePrefix())}\`\``)
-    .setFooter(Embed.resolveFooter(client));
+    .setFooter(Embed.resolveFooter(interaction.user));
     interaction.reply(':white_check_mark: Envoyé !')
     return channel.send({embeds: [embed]})
   }
@@ -140,6 +159,5 @@ module.exports.help.data = {
     description: "Affiche des informations sur la commande demandée.",
     type: 3,
     required: false,
-    choices: resolveCommandChoices()
   }],
 }

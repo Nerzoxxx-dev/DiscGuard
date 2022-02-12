@@ -28,7 +28,7 @@
     "icu_ver_major": "69",
     "is_debug": 0,
     "llvm_version": "0.0",
-    "napi_build_version": "8",
+    "napi_build_version": "0",
     "node_byteorder": "little",
     "node_debug_lib": "false",
     "node_enable_d8": "false",
@@ -342,7 +342,13 @@
     "v8_trace_maps": 0,
     "v8_use_siphash": 1,
     "want_separate_host_toolset": 0,
-    "nodedir": "/home/bdcmatteo/.cache/node-gyp/16.13.2",
-    "standalone_static_library": 1
+    "nodedir": "/root/.cache/node-gyp/16.13.2",
+    "standalone_static_library": 1,
+    "module": "/home/bdcmatteo/DiscGuard/lib/build/DiscGuard.node",
+    "module_name": "DiscGuard",
+    "module_path": "/home/bdcmatteo/DiscGuard/lib/build",
+    "napi_version": "8",
+    "node_abi_napi": "napi",
+    "node_napi_label": "node-v93"
   }
 }
