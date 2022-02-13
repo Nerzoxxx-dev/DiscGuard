@@ -11,6 +11,7 @@
     "avconv": "^3.1.0",
     "axios": "^0.25.0",
     "better-sqlite3": "^7.5.0",
+    "canvas": "^2.9.0",
     "captcha-canvas": "^3.1.0",
     "discord-api-types": "^0.26.1",
     "discord-player": "^5.2.1",
